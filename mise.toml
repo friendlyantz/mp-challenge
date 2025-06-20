@@ -1,0 +1,19 @@
+[tools]
+jj = "latest"
+ruby = "3.4.4"
+
+[tasks.install]
+description = "install dependencies"
+run = "bundle install"
+
+[tasks.code]
+description = "run code"
+run = "./bin/run"
+
+[tasks.lint]
+description = "lint Code"
+run = "bundle exec standardrb --fix"
+
+[tasks.test]
+description = "test Code"
+run = "bundle exec rspec"
