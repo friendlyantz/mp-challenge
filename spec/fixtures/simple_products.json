@@ -1,12 +1,22 @@
 [
   {
-    "uuid": 1,
+    "uuid": 9,
     "name": "Name A",
     "price": "10.00"
   },
   {
-    "uuid": 2,
+    "uuid": 1,
     "name": "Name B",
     "price": "20.00"
+  },
+  {
+    "uuid": 1,
+    "name": "DUPLICATE Name B",
+    "price": "20.00"
+  },
+  {
+    "uuid": "invalid",
+    "name": null,
+    "price": "bingo"
   }
 ]

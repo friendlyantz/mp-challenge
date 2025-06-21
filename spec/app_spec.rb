@@ -147,7 +147,7 @@ RSpec.describe App, type: "end to end" do
     end
   end
 
-  context "when a different product list is provided" do
+  context "when a different product list is provided with some records corrupt and doubling up" do
     let(:input_commands) { %w[1 exit] }
     let(:load_path) { "spec/fixtures/simple_products.json" }
 

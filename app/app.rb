@@ -2,6 +2,14 @@
 
 require "json"
 
+unless defined?(Zeitwerk)
+  require "zeitwerk"
+  loader = Zeitwerk::Loader.new
+  loader.push_dir("app")
+  loader.push_dir("db")
+  loader.setup
+end
+
 class App
   attr_reader :output, :database
 
@@ -25,7 +33,7 @@ class App
         view_cart_and_checkout
       in "4"
         list_promotions
-      in "exit"
+      in "exit" | "0"
         output.puts "Exiting the Marketplacer Checkout System. Goodbye!"
         run_state = false
       else
@@ -55,8 +63,8 @@ class App
 
   def list_products
     output.puts "Available Products:" + "\n"
-    generate_cli_record_mappings.each do |index, record|
-      output.puts "#{index}. #{record["name"]} - $#{"%.2f" % record["price"]}"
+    generate_cli_record_mappings.each do |cli_index, product|
+      output.puts "#{cli_index}. #{product.to_s(:with_price)}"
     end
   end
 
@@ -90,28 +98,53 @@ class App
     record_mappings = generate_cli_record_mappings
 
     if record_mappings.key?(user_selection)
-      decorated_record = record_mappings[user_selection]["name"]
-      output.puts "Product '#{decorated_record}' added to cart."
+      output.puts "Product '#{record_mappings[user_selection]}' added to cart."
     else
       output.puts "Invalid product number. Please try again."
     end
   end
 
   def generate_cli_record_mappings
-    mappings = {}
-    database.each_with_index do |record, index|
-      mappings[index + 1] = record
-    end
+    cli_mappings = {}
+    database
+      .values
+      .each_with_index do |record, index|
+        cli_mappings[index + 1] = record
+      end
 
-    mappings
+    cli_mappings
   end
 
   def load_database(load_path)
     if File.exist?(load_path)
-      JSON.parse(File.read(load_path))
+      initialize_index_and_models(JSON.parse(File.read(load_path)))
     else
       output.puts "Database file not found at #{load_path}. Using default products."
-      JSON.parse(File.read("db/products.json"))
+      initialize_index_and_models(JSON.parse(File.read("db/products.json")))
     end
+  end
+
+  def initialize_index_and_models(records)
+    index = {}
+    records.map do |record|
+      m = Models::Product.new(
+        uuid: record["uuid"],
+        name: record["name"],
+        price: record["price"]
+      )
+      if m.valid?
+        if index.key?(m.uuid)
+          output.puts "Duplicate product UUID detected: #{m.uuid}. Skipping."
+          next
+        end
+        output.puts "Loaded product: #{m.name} - #{m.price.format}"
+        index[m.uuid] = m
+
+      else
+        output.puts "Invalid product record: #{record}. Skipping."
+        next
+      end
+    end
+    index
   end
 end
