@@ -2,7 +2,7 @@ require "super_diff/rspec"
 require "zeitwerk"
 
 loader = Zeitwerk::Loader.new
-loader.push_dir("lib")
+loader.push_dir("app")
 loader.push_dir("db")
 loader.setup
 

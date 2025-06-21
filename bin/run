@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+require 'colorize'
+require File.join(__dir__, '../app/app')
+
+begin
+  App.new.run
+rescue Interrupt
+  puts "\nInterrupt Command received. Exiting...".light_red
+  exit 1
+end
