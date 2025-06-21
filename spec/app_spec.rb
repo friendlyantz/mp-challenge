@@ -4,7 +4,8 @@ require "stringio"
 RSpec.describe App, type: "end to end" do
   let(:input) { StringIO.new(input_commands.join("\n")) }
   let(:output) { StringIO.new }
-  let(:app) { App.new(input, output) }
+  let(:load_path) { "db/products.json" }
+  let(:app) { App.new(input, output, load_path) }
 
   before do
     app.run
@@ -45,7 +46,7 @@ RSpec.describe App, type: "end to end" do
   end
 
   describe "add product to carts" do
-    let(:input_commands) { %w[2] }
+    let(:input_commands) { %w[2 1] }
 
     it "loads the add product options" do
       expect(output.string).to include(
@@ -56,6 +57,14 @@ RSpec.describe App, type: "end to end" do
           3. Carbon Brake Pads - $92.00
           4. Front Derailleur - 34.9mm - $31.22
           Please enter the product number to add to cart:
+        EXPECTATION
+      )
+    end
+
+    it "adds a product to the cart" do
+      expect(output.string).to include(
+        <<~EXPECTATION
+          Product 'Jockey Wheels - Orange' added to cart.
         EXPECTATION
       )
     end
@@ -111,6 +120,35 @@ RSpec.describe App, type: "end to end" do
       expect(output.string).to include(
         <<~EXPECTATION
           Exiting the Marketplacer Checkout System. Goodbye!
+        EXPECTATION
+      )
+    end
+  end
+
+  context "when a different product list is provided" do
+    let(:input_commands) { %w[1] }
+    let(:load_path) { "spec/fixtures/simple_products.json" }
+
+    it "lists the correct products" do
+      expect(output.string).to include(
+        <<~EXPECTATION
+          Available Products:
+          1. Name A - $10.00
+          2. Name B - $20.00
+        EXPECTATION
+      )
+    end
+  end
+
+  context "when invalid load path is provided" do
+    let(:input_commands) { %w[1] }
+
+    let(:load_path) { "db/invalid_products.json" }
+
+    it "loads default db" do
+      expect(output.string).to include(
+        <<~EXPECTATION
+          Database file not found at db/invalid_products.json. Using default products.
         EXPECTATION
       )
     end

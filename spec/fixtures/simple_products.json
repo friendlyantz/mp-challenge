@@ -1,0 +1,12 @@
+[
+  {
+    "uuid": 1,
+    "name": "Name A",
+    "price": "10.00"
+  },
+  {
+    "uuid": 2,
+    "name": "Name B",
+    "price": "20.00"
+  }
+]

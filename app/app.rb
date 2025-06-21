@@ -1,8 +1,13 @@
+# frozen_string_literal: true
+
+require "json"
+
 class App
-  attr_reader :output
-  def initialize(input = $stdin, output = $stdout)
+  attr_reader :output, :database
+  def initialize(input = $stdin, output = $stdout, load_path = "db/products.json")
     @input = input
     @output = output
+    @database = load_database(load_path)
   end
 
   def run
@@ -40,16 +45,14 @@ class App
   def add_product_to_cart
     list_products
     output.puts "Please enter the product number to add to cart:"
+    select_product
   end
 
   def list_products
-    output.puts <<~OUTPUT
-      Available Products:
-      1. Jockey Wheels - Orange - $15.39
-      2. Chain Ring 146mm - $65.95
-      3. Carbon Brake Pads - $92.00
-      4. Front Derailleur - 34.9mm - $31.22
-    OUTPUT
+    output.puts "Available Products:" + "\n"
+    generate_cli_record_mappings.each do |index, record|
+      output.puts "#{index}. #{record["name"]} - $#{"%.2f" % record["price"]}"
+    end
   end
 
   def list_promotions
@@ -73,5 +76,37 @@ class App
 
       TOTAL: $163.65
     OUTPUT
+  end
+
+  private
+
+  def select_product
+    user_selection = @input&.gets&.chomp.to_i
+    record_mappings = generate_cli_record_mappings
+
+    if record_mappings.key?(user_selection)
+      decorated_record = record_mappings[user_selection]["name"]
+      output.puts "Product '#{decorated_record}' added to cart."
+    else
+      output.puts "Invalid product number. Please try again."
+    end
+  end
+
+  def generate_cli_record_mappings
+    mappings = {}
+    database.each_with_index do |record, index|
+      mappings[index + 1] = record
+    end
+
+    mappings
+  end
+
+  def load_database(load_path)
+    if File.exist?(load_path)
+      JSON.parse(File.read(load_path))
+    else
+      output.puts "Database file not found at #{load_path}. Using default products."
+      JSON.parse(File.read("db/products.json"))
+    end
   end
 end
