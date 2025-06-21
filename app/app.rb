@@ -4,6 +4,7 @@ require "json"
 
 class App
   attr_reader :output, :database
+
   def initialize(input = $stdin, output = $stdout, load_path = "db/products.json")
     @input = input
     @output = output
@@ -13,19 +14,23 @@ class App
   def run
     list_menu
 
-    case @input&.gets&.chomp
-    when "1"
-      list_products
-    when "2"
-      add_product_to_cart
-    when "3"
-      view_cart_and_checkout
-    when "4"
-      list_promotions
-    when "0"
-      output.puts "Exiting the Marketplacer Checkout System. Goodbye!"
-    else
-      output.puts "Invalid option. Please try again."
+    run_state = true
+    while run_state
+      case @input&.gets&.chomp
+      in "1"
+        list_products
+      in "2"
+        add_product_to_cart
+      in "3"
+        view_cart_and_checkout
+      in "4"
+        list_promotions
+      in "exit"
+        output.puts "Exiting the Marketplacer Checkout System. Goodbye!"
+        run_state = false
+      else
+        output.puts "Invalid menu option. Please try again."
+      end
     end
   end
 

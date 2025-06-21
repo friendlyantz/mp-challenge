@@ -12,7 +12,7 @@ RSpec.describe App, type: "end to end" do
   end
 
   describe "main menu" do
-    let(:input_commands) { %w[] }
+    let(:input_commands) { %w[0 exit] }
 
     it "loads the main menu" do
       expect(output.string).to match(
@@ -31,7 +31,7 @@ RSpec.describe App, type: "end to end" do
   end
 
   describe "list products" do
-    let(:input_commands) { %w[1] }
+    let(:input_commands) { %w[1 exit] }
     it "loads the main menu, reponds to CLI option for 'list products'" do
       expect(output.string).to include(
         <<~EXPECTATION
@@ -45,8 +45,8 @@ RSpec.describe App, type: "end to end" do
     end
   end
 
-  describe "add product to carts" do
-    let(:input_commands) { %w[2 1] }
+  describe "add products to cart and go to checkout" do
+    let(:input_commands) { %w[2 1 2 2 3 exit] }
 
     it "loads the add product options" do
       expect(output.string).to include(
@@ -68,10 +68,32 @@ RSpec.describe App, type: "end to end" do
         EXPECTATION
       )
     end
+
+    it "adds another product to the cart" do
+      expect(output.string).to include(
+        <<~EXPECTATION
+          Product 'Chain Ring 146mm' added to cart.
+        EXPECTATION
+      )
+    end
+    it "renders the checkout summary" do
+      pending
+      expect(output.string).to include(
+          <<~EXPECTATION
+            Products in Shopping Cart:
+            1. Jockey Wheels - Orange - $15.39
+            2. Chain Ring 146mm - $65.95
+
+            Discount applied: 15% off on total greater than $50
+
+            TOTAL: $TBC
+          EXPECTATION
+        )
+    end
   end
 
   describe "shopping cart" do
-    let(:input_commands) { %w[3] }
+    let(:input_commands) { %w[3 exit] }
     it "lists the products, discounts and totals" do
       expect(output.string).to include(
         <<~EXPECTATION
@@ -89,7 +111,7 @@ RSpec.describe App, type: "end to end" do
     end
   end
   describe "promotions" do
-    let(:input_commands) { %w[4] }
+    let(:input_commands) { %w[4 exit] }
     it "lists promos" do
       expect(output.string).to include(
         <<~EXPECTATION
@@ -103,18 +125,18 @@ RSpec.describe App, type: "end to end" do
   end
 
   describe "when invalid input is given" do
-    let(:input_commands) { %w[invalid_menu_opntion] }
+    let(:input_commands) { %w[invalid_menu_opntion exit] }
     it "does not crash and prompts for valid input" do
       expect(output.string).to include(
         <<~EXPECTATION
-          Invalid option. Please try again.
+          Invalid menu option. Please try again.
         EXPECTATION
       )
     end
   end
 
   describe "graceful exit" do
-    let(:input_commands) { %w[0] }
+    let(:input_commands) { %w[0 exit] }
 
     it "renders the exit message" do
       expect(output.string).to include(
@@ -126,7 +148,7 @@ RSpec.describe App, type: "end to end" do
   end
 
   context "when a different product list is provided" do
-    let(:input_commands) { %w[1] }
+    let(:input_commands) { %w[1 exit] }
     let(:load_path) { "spec/fixtures/simple_products.json" }
 
     it "lists the correct products" do
@@ -141,7 +163,7 @@ RSpec.describe App, type: "end to end" do
   end
 
   context "when invalid load path is provided" do
-    let(:input_commands) { %w[1] }
+    let(:input_commands) { %w[1 exit] }
 
     let(:load_path) { "db/invalid_products.json" }
 
