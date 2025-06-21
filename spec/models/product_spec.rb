@@ -81,8 +81,8 @@ RSpec.describe Models::Product, type: :unit do
 
   describe "#to_s" do
     it "returns a formatted string with name and price if format argument is specified" do
-      expect(aud_product.to_s(:with_price)).to eq("Standard Product - $19.99")
-      expect(gbp_product.to_s(:with_price)).to eq("UK Tea - £9.99")
+      expect(aud_product.to_s(:with_price)).to eq("Standard Product - $19.99 (AUD)")
+      expect(gbp_product.to_s(:with_price)).to eq("UK Tea - £9.99 (GBP)")
     end
 
     it "retirns a name string only when format is NOT provided or invalid" do

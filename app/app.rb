@@ -13,11 +13,11 @@ end
 class App
   attr_reader :output, :database, :shopping_cart
 
-  def initialize(input = $stdin, output = $stdout, load_path = "db/products.json")
+  def initialize(input = $stdin, output = $stdout, load_path = "db/products.json", currency = "AUD")
     @input = input
     @output = output
     @database = load_database(load_path)
-    @shopping_cart = ShoppingCart.new
+    @shopping_cart = ShoppingCart.new(currency)
   end
 
   def run
@@ -115,17 +115,23 @@ class App
   def initialize_index_and_models(records)
     index = {}
     records.map do |record|
+      currency = if record["currency"].nil?
+        "AUD"
+      else
+        record["currency"]
+      end
       m = Models::Product.new(
         uuid: record["uuid"],
         name: record["name"],
-        price: record["price"]
+        price: record["price"],
+        currency: currency
       )
       if m.valid?
         if index.key?(m.uuid)
           output.puts "Duplicate product UUID detected: #{m.uuid}. Skipping."
           next
         end
-        output.puts "Loaded product: #{m.name} - #{m.price.format}"
+        output.puts "Loaded product: #{m.name} - #{m.price.format} (#{m.price.currency})"
         index[m.uuid] = m
 
       else

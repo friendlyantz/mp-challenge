@@ -7,7 +7,7 @@ require "money"
 Money.locale_backend = nil
 Money.rounding_mode = BigDecimal::ROUND_HALF_UP
 I18n.enforce_available_locales = false
-Money.default_currency = "AUD"
+# Money.default_currency = "AUD"
 
 module Models
   class Product
@@ -27,7 +27,7 @@ module Models
 
     def to_s(format = nil)
       if format == :with_price
-        "#{name} - #{price.format}"
+        "#{name} - #{price.format} (#{price.currency})"
       else
         name
       end

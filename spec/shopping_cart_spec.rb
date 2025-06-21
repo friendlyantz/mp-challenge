@@ -39,6 +39,21 @@ RSpec.describe ShoppingCart do
           Money.from_amount(30.75, "AUD")
         )
       end
+
+      it "handles products with AUD and USD currencies at a rate USDAUD: 1.5" do
+        aud_price = Money.from_amount(50, "AUD")
+        usd_price = Money.from_amount(100, "USD")
+
+        allow(product_a).to receive(:price).and_return(aud_price)
+        allow(product_b).to receive(:price).and_return(usd_price)
+
+        cart.add_product(product_a)
+        cart.add_product(product_b)
+
+        expect(cart.totals).to eq(
+          Money.from_amount(200, "AUD") # Assuming 1 USD = 0.9 AUD
+        )
+      end
     end
   end
 
@@ -47,8 +62,8 @@ RSpec.describe ShoppingCart do
       cart.add_product(product_a)
       cart.add_product(product_b)
 
-      expect(product_a).to receive(:to_s).with(:with_price).and_return("Product One - $10.00")
-      expect(product_b).to receive(:to_s).with(:with_price).and_return("Product Two - $20.00")
+      expect(product_a).to receive(:to_s).with(:with_price).and_return("product details A")
+      expect(product_b).to receive(:to_s).with(:with_price).and_return("product details B")
 
       allow(cart).to receive(:totals).and_return(Money.from_amount(30, "AUD"))
 
@@ -56,10 +71,10 @@ RSpec.describe ShoppingCart do
         <<~OUTPUT
           ================ Shopping Cart =========
           Products in Shopping Cart:
-          1. Product One - $10.00
-          2. Product Two - $20.00
+          1. product details A
+          2. product details B
           ______________________________________
-          Total: $30.00
+          Total: $30.00 (AUD)
           ========================================
         OUTPUT
       )

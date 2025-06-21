@@ -18,10 +18,10 @@ RSpec.describe App, type: "end to end" do
       pending "Discount implementation"
       expect(output.string).to eq(
         <<~EXPECTATION
-          Loaded product: Jockey Wheels - Orange - $15.39
-          Loaded product: Chain Ring 146mm - $65.95
-          Loaded product: Carbon Brake Pads - $92.00
-          Loaded product: Front Derailleur - 34.9mm - $31.22
+          Loaded product: Jockey Wheels - Orange - $15.39 (AUD)
+          Loaded product: Chain Ring 146mm - $65.95 (AUD)
+          Loaded product: Carbon Brake Pads - $92.00 (AUD)
+          Loaded product: Front Derailleur - 34.9mm - $31.22 (AUD)
           ================ Marketplacer Checkout System =========
           press an number to select an option:
           1. List products
@@ -31,24 +31,24 @@ RSpec.describe App, type: "end to end" do
           0. Exit
           =======================================================
           Available Products:
-          1. Jockey Wheels - Orange - $15.39
-          2. Chain Ring 146mm - $65.95
-          3. Carbon Brake Pads - $92.00
-          4. Front Derailleur - 34.9mm - $31.22
+          1. Jockey Wheels - Orange - $15.39 (AUD)
+          2. Chain Ring 146mm - $65.95 (AUD)
+          3. Carbon Brake Pads - $92.00 (AUD)
+          4. Front Derailleur - 34.9mm - $31.22 (AUD)
           Please enter the product number to add to cart:
           Product 'Jockey Wheels - Orange' added to cart.
           Available Products:
-          1. Jockey Wheels - Orange - $15.39
-          2. Chain Ring 146mm - $65.95
-          3. Carbon Brake Pads - $92.00
-          4. Front Derailleur - 34.9mm - $31.22
+          1. Jockey Wheels - Orange - $15.39 (AUD)
+          2. Chain Ring 146mm - $65.95 (AUD)
+          3. Carbon Brake Pads - $92.00 (AUD)
+          4. Front Derailleur - 34.9mm - $31.22 (AUD)
           Please enter the product number to add to cart:
           Product 'Chain Ring 146mm' added to cart.
 
           ================ Shopping Cart =========
           Products in Shopping Cart:
-          1. Jockey Wheels - Orange - $15.39
-          2. Chain Ring 146mm - $65.95
+          1. Jockey Wheels - Orange - $15.39 (AUD)
+          2. Chain Ring 146mm - $65.95 (AUD)
 
           Discount applied: 15% off on total greater than $50
 
@@ -96,16 +96,43 @@ RSpec.describe App, type: "end to end" do
     end
   end
 
-  context "when a different product list is provided with some records corrupt and doubling up" do
-    let(:input_commands) { %w[1 exit] }
+  context "when a different product list is provided with some records corrupt and doubling up, as well as specific currencies" do
+    let(:input_commands) { %w[2 1 2 2 3 exit] }
     let(:load_path) { "spec/fixtures/simple_products.json" }
 
-    it "lists the correct products" do
-      expect(output.string).to include(
+    it "lists the correct products in 'AUD'" do
+      expect(output.string).to eq(
         <<~EXPECTATION
+          Loaded product: Name A - $10.00 (USD)
+          Loaded product: Name B - $20.00 (AUD)
+          Duplicate product UUID detected: 1. Skipping.
+          Invalid product record: {"uuid" => "invalid", "name" => nil, "price" => "bingo"}. Skipping.
+          ================ Marketplacer Checkout System =========
+          press an number to select an option:
+          1. List products
+          2. Add product to cart
+          3. View cart and checkout
+          4. View available promotions
+          0. Exit
+          =======================================================
           Available Products:
-          1. Name A - $10.00
-          2. Name B - $20.00
+          1. Name A - $10.00 (USD)
+          2. Name B - $20.00 (AUD)
+          Please enter the product number to add to cart:
+          Product 'Name A' added to cart.
+          Available Products:
+          1. Name A - $10.00 (USD)
+          2. Name B - $20.00 (AUD)
+          Please enter the product number to add to cart:
+          Product 'Name B' added to cart.
+          ================ Shopping Cart =========
+          Products in Shopping Cart:
+          1. Name A - $10.00 (USD)
+          2. Name B - $20.00 (AUD)
+          ______________________________________
+          Total: $35.00 (AUD)
+          ========================================
+          Exiting the Marketplacer Checkout System. Goodbye!
         EXPECTATION
       )
     end

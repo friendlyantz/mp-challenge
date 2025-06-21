@@ -2,7 +2,8 @@
   {
     "uuid": 9,
     "name": "Name A",
-    "price": "10.00"
+    "price": "10.00",
+    "currency": "USD"
   },
   {
     "uuid": 1,
