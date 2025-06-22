@@ -31,8 +31,10 @@ class ShoppingCart
       ================ Shopping Cart =========
       Products in Shopping Cart:
       #{
-        products.map.with_index do |product, index|
-          "#{index + 1}. #{product.to_s(:with_price)}"
+        products
+        .tally
+        .map.with_index do |(product, count), index|
+          "#{index + 1}. #{product.to_s(:with_price)}".ljust(50) + " x #{count}"
         end.join("\n")
       }
 

@@ -12,9 +12,9 @@ RSpec.describe App, type: "end to end" do
   end
 
   context "when discount applies" do
-    let(:input_commands) { %w[2 1 2 2 3 exit] }
+    let(:input_commands) { %w[2 1 2 2 2 1 3 exit] }
 
-    it "it renders menu, allows to add a product to a cart and renders totals" do
+    it "it renders menu, allows to add multiple products of the same kind to a cart and renders totals" do
       expect(output.string).to eq(
         <<~EXPECTATION
           Loaded product: Jockey Wheels - Orange - $15.39 (AUD)
@@ -43,15 +43,22 @@ RSpec.describe App, type: "end to end" do
           4. Front Derailleur - 34.9mm - $31.22 (AUD)
           Please enter the product number to add to cart:
           Product 'Chain Ring 146mm' added to cart.
-          ================ Shopping Cart =========
-          Products in Shopping Cart:
+          Available Products:
           1. Jockey Wheels - Orange - $15.39 (AUD)
           2. Chain Ring 146mm - $65.95 (AUD)
+          3. Carbon Brake Pads - $92.00 (AUD)
+          4. Front Derailleur - 34.9mm - $31.22 (AUD)
+          Please enter the product number to add to cart:
+          Product 'Jockey Wheels - Orange' added to cart.
+          ================ Shopping Cart =========
+          Products in Shopping Cart:
+          1. Jockey Wheels - Orange - $15.39 (AUD)           x 2
+          2. Chain Ring 146mm - $65.95 (AUD)                 x 1
 
           Discount applied: 15% off on total greater than $50
 
           ______________________________________
-          TOTAL: $69.14 (AUD)
+          TOTAL: $82.22 (AUD)
           ========================================
           Exiting the Marketplacer Checkout System. Goodbye!
         EXPECTATION
@@ -122,7 +129,7 @@ RSpec.describe App, type: "end to end" do
           Product 'Name A' added to cart.
           ================ Shopping Cart =========
           Products in Shopping Cart:
-          1. Name A - $10.00 (USD)
+          1. Name A - $10.00 (USD)                           x 1
 
 
 
@@ -136,8 +143,8 @@ RSpec.describe App, type: "end to end" do
           Product 'Name B' added to cart.
           ================ Shopping Cart =========
           Products in Shopping Cart:
-          1. Name A - $10.00 (USD)
-          2. Name B - $20.00 (AUD)
+          1. Name A - $10.00 (USD)                           x 1
+          2. Name B - $20.00 (AUD)                           x 1
 
           Discount applied: 10% off on total greater than $20
 

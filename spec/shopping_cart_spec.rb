@@ -98,6 +98,7 @@ RSpec.describe ShoppingCart do
     before do
       cart.add_product(product_a)
       cart.add_product(product_b)
+      cart.add_product(product_b)
 
       allow(product_a).to receive(:to_s).with(:with_price).and_return("product details A")
       allow(product_b).to receive(:to_s).with(:with_price).and_return("product details B")
@@ -111,8 +112,8 @@ RSpec.describe ShoppingCart do
         <<~OUTPUT
           ================ Shopping Cart =========
           Products in Shopping Cart:
-          1. product details A
-          2. product details B
+          1. product details A                               x 1
+          2. product details B                               x 2
 
 
 
@@ -135,8 +136,8 @@ RSpec.describe ShoppingCart do
           <<~OUTPUT
             ================ Shopping Cart =========
             Products in Shopping Cart:
-            1. product details A
-            2. product details B
+            1. product details A                               x 1
+            2. product details B                               x 2
 
             Discount applied: 10% off promotion
 

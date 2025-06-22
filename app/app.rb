@@ -68,9 +68,12 @@ class App
   def list_promotions
     output.puts <<~OUTPUT
       Available Promotions:
-      1. Big Spender: 20% off on total greater than $100
-      2. Medium Spender: 15% off on total greater than $50
-      3. Small Spender: 10% off on total greater than $20
+      #{
+        shopping_cart.promotions
+        .map.with_index do |promo, index|
+          "#{index + 1}. #{promo.name}: " + "#{promo.description}"
+        end.join("\n")
+      }
     OUTPUT
   end
 
