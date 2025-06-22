@@ -2,6 +2,8 @@
 
 require "json"
 
+require_relative "../config/money_config"
+
 unless defined?(Zeitwerk)
   require "zeitwerk"
   loader = Zeitwerk::Loader.new
@@ -47,7 +49,7 @@ class App
       2. Add product to cart
       3. View cart and checkout
       4. View available promotions
-      0. Exit
+      0. Exit. Or type 'exit' anytime to exit
       =======================================================
     OUTPUT
   end
@@ -90,6 +92,8 @@ class App
     if record_mappings.key?(user_selection)
       shopping_cart.add_product(record_mappings[user_selection])
       output.puts "Product '#{record_mappings[user_selection]}' added to cart."
+    elsif user_selection == 0 || user_selection == "exit"
+      exit 0
     else
       output.puts "Invalid product number. Please try again."
     end

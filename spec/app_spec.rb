@@ -27,7 +27,7 @@ RSpec.describe App, type: "end to end" do
           2. Add product to cart
           3. View cart and checkout
           4. View available promotions
-          0. Exit
+          0. Exit. Or type 'exit' anytime to exit
           =======================================================
           Available Products:
           1. Jockey Wheels - Orange - $15.39 (AUD)
@@ -120,7 +120,7 @@ RSpec.describe App, type: "end to end" do
           2. Add product to cart
           3. View cart and checkout
           4. View available promotions
-          0. Exit
+          0. Exit. Or type 'exit' anytime to exit
           =======================================================
           Available Products:
           1. Name A - $10.00 (USD)

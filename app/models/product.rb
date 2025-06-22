@@ -4,11 +4,6 @@ require "active_model"
 require "active_support/core_ext/string"
 require "money"
 
-Money.locale_backend = nil
-Money.rounding_mode = BigDecimal::ROUND_HALF_UP
-I18n.enforce_available_locales = false
-# Money.default_currency = "AUD"
-
 module Models
   class Product
     include ::ActiveModel::Model
