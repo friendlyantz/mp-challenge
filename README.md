@@ -1,6 +1,8 @@
 
 ## Usage
 
+requires Ruby 3.4.4 as per `mise.toml` and `Gemfile`
+
 ### using native Makefile
 
 ```sh
@@ -40,11 +42,13 @@ Select a task to run
 Code was written using TDD  and can be reviewed commit-by-commit.
 I attempted to drive out logic using BDD to write e2e /top-level test first and then drive out the logic for auxilary classes and methods.
 
+I used [JJ-VCS](https://jj-vcs.github.io/jj/latest/) instead of Git to track changes, as I wanted to try it out and see how it works. It is a simple VCS that allows you to track changes in files and directories, so don't let non-trunk commits confuse you in `git` tools as these are relevant to JJ-VCS caching and versioning only.
+
 time constraints: 4-8 hours
 
 lessons learned - I should have used Dry Monads and Transactions to pass the data and stick to functional style approach for handling data. For simplicity I decided just to pipe data to get MVP
 
-I wanted to implement MCP(Model Context Protocol) Server for AI to make choices, but struggled with integration due to time constaints and coupled CLI output
+I wanted to implement MCP(Model Context Protocol) Server for AI to make choices, but struggled with integration due to time constaints and coupled CLI output.
 
 ## Domain Logic & Architecture
 
