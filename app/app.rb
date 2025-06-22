@@ -37,6 +37,7 @@ class App
         run_state = false
       else
         output.puts "Invalid menu option. Please try again."
+        list_menu
       end
     end
   end
@@ -58,7 +59,6 @@ class App
     list_products
     output.puts "Please enter the product number to add to cart:"
     select_product
-    list_menu
   end
 
   def list_products
@@ -78,6 +78,7 @@ class App
         end.join("\n")
       }
     OUTPUT
+    list_menu
   end
 
   def view_cart

@@ -127,7 +127,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activemodel (~> 8.0)
+  activemodel
   bigdecimal
   colorize
   money
@@ -136,6 +136,9 @@ DEPENDENCIES
   standard-rspec
   super_diff
   zeitwerk
+
+RUBY VERSION
+   ruby 3.4.4p34
 
 BUNDLED WITH
    2.6.7
