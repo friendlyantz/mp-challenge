@@ -58,6 +58,7 @@ class App
     list_products
     output.puts "Please enter the product number to add to cart:"
     select_product
+    list_menu
   end
 
   def list_products
@@ -73,7 +74,7 @@ class App
       #{
         shopping_cart.promotions
         .map.with_index do |promo, index|
-          "#{index + 1}. #{promo.name}: " + "#{promo.description}"
+          "#{index + 1}. #{promo.name}: " + promo.description.to_s
         end.join("\n")
       }
     OUTPUT
@@ -111,68 +112,25 @@ class App
   end
 
   def load_database(load_path)
-    if File.exist?(load_path)
-      initialize_index_and_models(JSON.parse(File.read(load_path)))
-    else
-      output.puts "Database file not found at #{load_path}. Using default products."
-      initialize_index_and_models(JSON.parse(File.read("db/products.json")))
-    end
-  end
+    result = Services::ProductLoader.load_from_file(load_path, "db/products.json")
 
-  def initialize_index_and_models(records)
-    index = {}
-    records.map do |record|
-      currency = if record["currency"].nil?
-        "AUD"
-      else
-        record["currency"]
-      end
-      m = Models::Product.new(
-        uuid: record["uuid"],
-        name: record["name"],
-        price: record["price"],
-        currency: currency
-      )
-      if m.valid?
-        if index.key?(m.uuid)
-          output.puts "Duplicate product UUID detected: #{m.uuid}. Skipping."
-          next
-        end
-        output.puts "Loaded product: #{m.name} - #{m.price.format} (#{m.price.currency})"
-        index[m.uuid] = m
+    result[:messages].each { |message| output.puts message }
 
-      else
-        output.puts "Invalid product record: #{record}. Skipping."
-        next
-      end
+    if result[:products].empty?
+      output.puts "Warning: No valid products loaded. Application may not function properly."
     end
-    index
+
+    result[:products]
   end
 
   def load_shopping_cart_with_promos(currency)
     cart = ShoppingCart.new(currency)
-    begin
-      cart.add_promotion(Promotions::PercentageOffPromotion.new(
-        name: "Big Spender",
-        percentage: 20,
-        description: "20% off on total greater than $100",
-        threshold: 100
-      ))
-      cart.add_promotion(Promotions::PercentageOffPromotion.new(
-        name: "Medium Spender",
-        percentage: 15,
-        description: "15% off on total greater than $50",
-        threshold: 50
-      ))
-      cart.add_promotion(Promotions::PercentageOffPromotion.new(
-        name: "Small Spender",
-        percentage: 10,
-        description: "10% off on total greater than $20",
-        threshold: 20
-      ))
-    rescue => e
-      output.puts "Error initializing shopping cart with promotions: #{e.message}"
-    end
+    result = Services::PromotionLoader.load_default_promotions
+
+    result[:messages].each { |message| output.puts message }
+
+    result[:promotions].each { |promotion| cart.add_promotion(promotion) }
+
     cart
   end
 end

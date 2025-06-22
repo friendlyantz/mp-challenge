@@ -21,6 +21,9 @@ RSpec.describe App, type: "end to end" do
           Loaded product: Chain Ring 146mm - $65.95 (AUD)
           Loaded product: Carbon Brake Pads - $92.00 (AUD)
           Loaded product: Front Derailleur - 34.9mm - $31.22 (AUD)
+          Loaded promotion: Big Spender
+          Loaded promotion: Medium Spender
+          Loaded promotion: Small Spender
           ================ Marketplacer Checkout System =========
           press an number to select an option:
           1. List products
@@ -36,6 +39,14 @@ RSpec.describe App, type: "end to end" do
           4. Front Derailleur - 34.9mm - $31.22 (AUD)
           Please enter the product number to add to cart:
           Product 'Jockey Wheels - Orange' added to cart.
+          ================ Marketplacer Checkout System =========
+          press an number to select an option:
+          1. List products
+          2. Add product to cart
+          3. View cart and checkout
+          4. View available promotions
+          0. Exit. Or type 'exit' anytime to exit
+          =======================================================
           Available Products:
           1. Jockey Wheels - Orange - $15.39 (AUD)
           2. Chain Ring 146mm - $65.95 (AUD)
@@ -43,6 +54,14 @@ RSpec.describe App, type: "end to end" do
           4. Front Derailleur - 34.9mm - $31.22 (AUD)
           Please enter the product number to add to cart:
           Product 'Chain Ring 146mm' added to cart.
+          ================ Marketplacer Checkout System =========
+          press an number to select an option:
+          1. List products
+          2. Add product to cart
+          3. View cart and checkout
+          4. View available promotions
+          0. Exit. Or type 'exit' anytime to exit
+          =======================================================
           Available Products:
           1. Jockey Wheels - Orange - $15.39 (AUD)
           2. Chain Ring 146mm - $65.95 (AUD)
@@ -50,6 +69,14 @@ RSpec.describe App, type: "end to end" do
           4. Front Derailleur - 34.9mm - $31.22 (AUD)
           Please enter the product number to add to cart:
           Product 'Jockey Wheels - Orange' added to cart.
+          ================ Marketplacer Checkout System =========
+          press an number to select an option:
+          1. List products
+          2. Add product to cart
+          3. View cart and checkout
+          4. View available promotions
+          0. Exit. Or type 'exit' anytime to exit
+          =======================================================
           ================ Shopping Cart =========
           Products in Shopping Cart:
           1. Jockey Wheels - Orange - $15.39 (AUD)           x 2
@@ -114,6 +141,9 @@ RSpec.describe App, type: "end to end" do
           Loaded product: Name B - $20.00 (AUD)
           Duplicate product UUID detected: 1. Skipping.
           Invalid product record: {"uuid" => "invalid", "name" => nil, "price" => "bingo"}. Skipping.
+          Loaded promotion: Big Spender
+          Loaded promotion: Medium Spender
+          Loaded promotion: Small Spender
           ================ Marketplacer Checkout System =========
           press an number to select an option:
           1. List products
@@ -127,6 +157,14 @@ RSpec.describe App, type: "end to end" do
           2. Name B - $20.00 (AUD)
           Please enter the product number to add to cart:
           Product 'Name A' added to cart.
+          ================ Marketplacer Checkout System =========
+          press an number to select an option:
+          1. List products
+          2. Add product to cart
+          3. View cart and checkout
+          4. View available promotions
+          0. Exit. Or type 'exit' anytime to exit
+          =======================================================
           ================ Shopping Cart =========
           Products in Shopping Cart:
           1. Name A - $10.00 (USD)                           x 1
@@ -141,6 +179,14 @@ RSpec.describe App, type: "end to end" do
           2. Name B - $20.00 (AUD)
           Please enter the product number to add to cart:
           Product 'Name B' added to cart.
+          ================ Marketplacer Checkout System =========
+          press an number to select an option:
+          1. List products
+          2. Add product to cart
+          3. View cart and checkout
+          4. View available promotions
+          0. Exit. Or type 'exit' anytime to exit
+          =======================================================
           ================ Shopping Cart =========
           Products in Shopping Cart:
           1. Name A - $10.00 (USD)                           x 1
