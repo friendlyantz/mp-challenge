@@ -17,7 +17,7 @@ class App
     @input = input
     @output = output
     @database = load_database(load_path)
-    @shopping_cart = ShoppingCart.new(currency)
+    @shopping_cart = load_shopping_cart_with_promos(currency)
   end
 
   def run
@@ -28,7 +28,7 @@ class App
       case @input&.gets&.chomp
       in "1" then list_products
       in "2" then add_product_to_cart
-      in "3" then view_cart_and_checkout
+      in "3" then view_cart
       in "4" then list_promotions
       in "exit" | "0"
         output.puts "Exiting the Marketplacer Checkout System. Goodbye!"
@@ -74,7 +74,7 @@ class App
     OUTPUT
   end
 
-  def view_cart_and_checkout
+  def view_cart
     output.puts shopping_cart
   end
 
@@ -140,5 +140,32 @@ class App
       end
     end
     index
+  end
+
+  def load_shopping_cart_with_promos(currency)
+    cart = ShoppingCart.new(currency)
+    begin
+      cart.add_promotion(Promotions::PercentageOffPromotion.new(
+        name: "Big Spender",
+        percentage: 20,
+        description: "20% off on total greater than $100",
+        threshold: 100
+      ))
+      cart.add_promotion(Promotions::PercentageOffPromotion.new(
+        name: "Medium Spender",
+        percentage: 15,
+        description: "15% off on total greater than $50",
+        threshold: 50
+      ))
+      cart.add_promotion(Promotions::PercentageOffPromotion.new(
+        name: "Small Spender",
+        percentage: 10,
+        description: "10% off on total greater than $20",
+        threshold: 20
+      ))
+    rescue => e
+      output.puts "Error initializing shopping cart with promotions: #{e.message}"
+    end
+    cart
   end
 end

@@ -15,7 +15,6 @@ RSpec.describe App, type: "end to end" do
     let(:input_commands) { %w[2 1 2 2 3 exit] }
 
     it "it renders menu, allows to add a product to a cart and renders totals" do
-      pending "Discount implementation"
       expect(output.string).to eq(
         <<~EXPECTATION
           Loaded product: Jockey Wheels - Orange - $15.39 (AUD)
@@ -44,7 +43,6 @@ RSpec.describe App, type: "end to end" do
           4. Front Derailleur - 34.9mm - $31.22 (AUD)
           Please enter the product number to add to cart:
           Product 'Chain Ring 146mm' added to cart.
-
           ================ Shopping Cart =========
           Products in Shopping Cart:
           1. Jockey Wheels - Orange - $15.39 (AUD)
@@ -52,7 +50,9 @@ RSpec.describe App, type: "end to end" do
 
           Discount applied: 15% off on total greater than $50
 
-          TOTAL: $81.34NOT
+          ______________________________________
+          TOTAL: $69.14 (AUD)
+          ========================================
           Exiting the Marketplacer Checkout System. Goodbye!
         EXPECTATION
       )
@@ -97,7 +97,7 @@ RSpec.describe App, type: "end to end" do
   end
 
   context "when a different product list is provided with some records corrupt and doubling up, as well as specific currencies" do
-    let(:input_commands) { %w[2 1 2 2 3 exit] }
+    let(:input_commands) { %w[2 1 3 2 2 3 exit] }
     let(:load_path) { "spec/fixtures/simple_products.json" }
 
     it "lists the correct products in 'AUD'" do
@@ -120,6 +120,15 @@ RSpec.describe App, type: "end to end" do
           2. Name B - $20.00 (AUD)
           Please enter the product number to add to cart:
           Product 'Name A' added to cart.
+          ================ Shopping Cart =========
+          Products in Shopping Cart:
+          1. Name A - $10.00 (USD)
+
+
+
+          ______________________________________
+          TOTAL: $15.00 (AUD)
+          ========================================
           Available Products:
           1. Name A - $10.00 (USD)
           2. Name B - $20.00 (AUD)
@@ -129,8 +138,11 @@ RSpec.describe App, type: "end to end" do
           Products in Shopping Cart:
           1. Name A - $10.00 (USD)
           2. Name B - $20.00 (AUD)
+
+          Discount applied: 10% off on total greater than $20
+
           ______________________________________
-          Total: $35.00 (AUD)
+          TOTAL: $31.50 (AUD)
           ========================================
           Exiting the Marketplacer Checkout System. Goodbye!
         EXPECTATION
