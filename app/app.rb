@@ -59,6 +59,7 @@ class App
     list_products
     output.puts "Please enter the product number to add to cart:"
     select_product
+    list_menu
   end
 
   def list_products
@@ -83,6 +84,8 @@ class App
 
   def view_cart
     output.puts shopping_cart
+
+    list_menu
   end
 
   private

@@ -87,6 +87,14 @@ RSpec.describe App, type: "end to end" do
           ______________________________________
           TOTAL: $82.22 (AUD)
           ========================================
+          ================ Marketplacer Checkout System =========
+          press an number to select an option:
+          1. List products
+          2. Add product to cart
+          3. View cart and checkout
+          4. View available promotions
+          0. Exit. Or type 'exit' anytime to exit
+          =======================================================
           Exiting the Marketplacer Checkout System. Goodbye!
         EXPECTATION
       )
@@ -174,6 +182,14 @@ RSpec.describe App, type: "end to end" do
           ______________________________________
           TOTAL: $15.00 (AUD)
           ========================================
+          ================ Marketplacer Checkout System =========
+          press an number to select an option:
+          1. List products
+          2. Add product to cart
+          3. View cart and checkout
+          4. View available promotions
+          0. Exit. Or type 'exit' anytime to exit
+          =======================================================
           Available Products:
           1. Name A - $10.00 (USD)
           2. Name B - $20.00 (AUD)
@@ -197,6 +213,14 @@ RSpec.describe App, type: "end to end" do
           ______________________________________
           TOTAL: $31.50 (AUD)
           ========================================
+          ================ Marketplacer Checkout System =========
+          press an number to select an option:
+          1. List products
+          2. Add product to cart
+          3. View cart and checkout
+          4. View available promotions
+          0. Exit. Or type 'exit' anytime to exit
+          =======================================================
           Exiting the Marketplacer Checkout System. Goodbye!
         EXPECTATION
       )
