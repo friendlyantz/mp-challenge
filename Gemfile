@@ -18,3 +18,5 @@ group :test do
   gem "standard-rspec"
   gem "super_diff"
 end
+
+gem "fast-mcp", "~> 1.5"

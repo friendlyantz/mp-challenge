@@ -1,3 +1,161 @@
+# MCP
+
+here is Claude desctop output of the MCP server
+
+in your claude desktop you need to set up your config to point to the server
+
+```json
+{
+  "mcpServers": {
+    "mp-challenge": {
+      "command": "/Users/friendlyantz/.local/share/mise/installs/ruby/3.4.4/bin/ruby",
+      "args": [
+        "/Users/friendlyantz/code/personal/mp-challenge/app/app.rb"
+      ]
+    }
+  }
+}
+```
+
+list products
+
+```ruby
+Edit
+I'll help you list the available products. Let me check what's available for you.
+
+M
+
+BikeListingTool
+
+Here are the available bike products:
+
+Jockey Wheels - Orange - $15.39 AUD (UUID: 1411)
+Chain Ring 146mm - $65.95 AUD (UUID: 23881)
+Carbon Brake Pads - $92.00 AUD (USD: 13008)
+Front Derailleur - 34.9mm - $31.22 AUD (UUID: 9101)
+Would you like to add any of these items to your cart or need more information about any specific product?
+```
+
+add jockey wheels
+
+```ruby
+I'll add the Jockey Wheels - Orange to your cart.
+
+M
+
+AddBikeToCartTool
+
+Great! I've successfully added the Jockey Wheels - Orange ($15.39 AUD) to your cart.
+
+Would you like to add any other products to your cart or view your current cart?
+
+```
+
+view cart
+
+```ruby
+
+Edit
+
+M
+
+BikeShoppingCartTool
+
+Here's your current cart:
+
+Items in Cart:
+
+Jockey Wheels - Orange (Quantity: 1) - $15.39 AUD
+Cart Summary:
+
+Subtotal: $15.39 AUD
+Final Total: $15.39 AUD
+You have 1 item in your cart. Would you like to add more products or need anything else?
+
+```
+
+add another jockey wheel
+
+```ruby
+
+Edit
+I'll add another Jockey Wheels - Orange to your cart.
+
+M
+
+AddBikeToCartTool
+
+Perfect! I've added another Jockey Wheels - Orange ($15.39 AUD) to your cart. You now have 2 of these items in your cart.
+
+Would you like me to show you your updated cart or add any other products?
+```
+
+what is in the cart
+
+```ruby
+
+Edit
+
+M
+
+BikeShoppingCartTool
+
+Here's what's currently in your cart:
+
+Items in Cart:
+
+Jockey Wheels - Orange (Quantity: 2) - $30.78 AUD
+Cart Summary:
+
+Subtotal: $30.78 AUD
+Discount Applied: 10% off on total greater than $20
+Final Total: $27.70 AUD
+Great news! You've qualified for a 10% discount since your total is over $20, saving you $3.08 on your order.
+
+Would you like to add any other items or need help with anything else?
+
+```
+
+add Carbon Brake Pads
+
+```ruby
+I'll add the Carbon Brake Pads to your cart.
+
+AddBikeToCartTool
+
+Excellent! I've added the Carbon Brake Pads ($92.00 AUD) to your cart.
+
+Your cart now contains:
+
+2x Jockey Wheels - Orange
+1x Carbon Brake Pads
+Would you like me to show you your updated cart total or add any other products?
+
+```
+
+whats in the cart now
+
+```ruby
+
+BikeShoppingCartTool
+
+Here's what's currently in your cart:
+
+Items in Cart:
+
+Jockey Wheels - Orange (Quantity: 2) - $30.78 AUD
+Carbon Brake Pads (Quantity: 1) - $92.00 AUD
+Cart Summary:
+
+Subtotal: $122.78 AUD
+Discount Applied: 20% off on total greater than $100
+Final Total: $98.22 AUD
+Fantastic! You've now qualified for an even better discount - 20% off since your total is over $100, saving you $24.56 on your order.
+
+Would you like to add any other items or need help with anything else?
+```
+
+---
 
 ## Usage
 
