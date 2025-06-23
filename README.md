@@ -9,6 +9,7 @@ here is example output(full output below)
 here is Claude desctop output of the MCP server
 
 in your claude desktop you need to set up your config to point to the server
+![image](https://github.com/user-attachments/assets/881712df-5860-4f26-87e5-ca8812be202e)
 
 ```json
 {
