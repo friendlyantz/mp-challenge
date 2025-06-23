@@ -1,5 +1,11 @@
 # MCP
 
+this branch is only for Claude Desktop test of the MCP (Model Context Protocol) server test of the shopping experience.
+here is example output(full output below)
+
+![image](https://github.com/user-attachments/assets/35872d3d-0e79-448c-b31f-6832662ebacd)
+
+
 here is Claude desctop output of the MCP server
 
 in your claude desktop you need to set up your config to point to the server
